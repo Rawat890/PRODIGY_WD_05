@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Application Prodigy Infotech</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="preconnect" href="https://fonts.googleapis.com">r̥
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+
+
+    <!--CSS FOR THE WEATHER APP-->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+
+        }
+
+        body {
+            font-family: "Madimi One", sans-serif;
+            background-color: rgb(204, 80, 96);
+            height: 100vh;
+        }
+
+
+        /*main container of the page*/
+        .weather-app {
+            background-color: rgb(62, 123, 188);
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 14px;
+        }
+
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+
+        /*used so, that the text box takes full space before the search button*/
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid blue;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+
+        /*search button css*/
+        .search {
+            background-color: green;
+            border-radius: 10px;
+            margin-left: 10px;
+            color: white;
+            cursor: pointer;
+            padding: 5px;
+
+            transition: background-color 0.3s ease;
+        }
+
+        .search:hover {
+            background-color: lavender;
+            color: black;
+        }
+
+        /*div block 1 css */
+        .city-date {
+
+            margin-top: 25px;
+
+            /*next 3 properties are used to align to contents of the div to the center*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            /*by default flex-direction is row*/
+            gap: 10px;
+
+        }
+
+        .city-date .city1 {
+            font-size: 2rem;
+            opacity: 0.9;
+        }
+
+        .city-date .date {
+            background-color: bisque;
+            padding: 10px 5px;
+            /*top-bottom left-right*/
+            border-radius: 13px;
+        }
+
+
+        /*div block 2 css*/
+        .temperature {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .temperature .temp {
+            font-size: 8rem;
+        }
+
+        .temperature .description {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .temperature .description i {
+            font-size: 3.5rem;
+            opacity: 0.9;
+        }
+
+        .temperature .description span {
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+
+
+        /*div block 3 css*/
+        .additional-info {
+            margin-top: 23px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .wind-info,
+        .humidity-info,
+        .visibility-info {
+            background-color: beige;
+            width: 6.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-direction: column;
+            border-radius: 15px;
+            padding: 30px 20px;
+            box-shadow: rgba(0, 0, 0, 25) 0px 4px 10px;
+        }
+
+        .additional-info .material-icons {
+            font-size: 3rem;
+            opacity: 0.9;
+        }
+
+        .wind-info div,
+        .humidity-info div,
+        .visibility-info div {
+            text-align: center;
+        }
+    </style>
+
+
+</head>
+
+
+
+<!--MAIN BODY SECTION-->
+<body>
+
+    <body>
+        <!--div block 1-->
+        <div class="weather-app">
+            <form action="" class="search-form">
+                <input type="text" class="Input-city" placeholder="Enter City">
+                <button class="search" type="submit">
+                    <i class="material-icons">search</i>
+                </button>
+            </form>
+
+
+            <!--div block 1-->
+            <div class="city-date">
+                <h2 class="city1">Delhi</h2>
+                <p class="date">18 April, 2024</p>
+            </div>
+
+
+            <!--div block 2-->
+            <div class="temperature">
+                <div class="description">
+                    <i class="material-icons">sunny</i>
+                    <span class="desc-text">Sunny</span>
+                </div>
+                <div class="temp">35°</div>
+
+            </div>
+
+
+            <!--div block 3-->
+            <div class="additional-info">
+
+                <div class="wind-info">
+                    <i class="material-icons">air</i>
+                    <h3 class="wind-speed">6Km/hr</h3>
+                    <p class="wind-label">Wind</p>
+                </div>
+
+                <div class="humidity-info">
+                    <i class="material-icons">water_drop</i>
+                    <h3 class="humidity">56%</h3>
+                    <p class="humidity-label">Humidity</p>
+                </div>
+
+                <div class="visibility-info">
+                    <i class="material-icons">visibility</i>
+                    <h3 class="visibility-distance">1800 m</h3>
+                    <p class="visibility-label">Visibility</p>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </body>
+
+
+
+    <!--JAVASCRIPT-->
+    <script>
+        const apiKey = `378625208a4a8917e69b5a7351a6bf55`;
+        // const city = "Chennai";
+
+        async function FetchWeatherData(city) {
+
+            /*api returns the response and we will store it in variable , We are using await method here that means that until the line is executed completely, the next line is not executed*/
+
+
+            try {
+
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+
+                if(!response.ok)
+                {
+                    throw new error ("UNABLE TO FETCH DATA");
+                }
+
+                /*storing the response in json format*/
+                const data = await response.json();
+
+                console.log(data);
+
+
+                /*
+                 console.log(data.main.temp);
+                 console.log(data.name);
+                 console.log(data.wind.speed);
+                 console.log(data.main.humidity);
+                 console.log(data.visibility);
+               
+                calling function for updating weather*/
+
+                UpdateWeather(data);
+
+            }
+            catch(error){
+               console.error(error);
+            }
+        }
+
+
+
+
+        const cityElement = document.querySelector(".city1");
+        const temperature = document.querySelector(".temp");
+        const windSpeed = document.querySelector(".wind-speed");
+        const humid = document.querySelector(".humidity");
+        const visible = document.querySelector(".visibility-distance");
+        const describe = document.querySelector(".desc-text");
+        const date = document.querySelector(".date");
+        const Icon = document.querySelector(".description i");
+
+
+
+
+
+        function UpdateWeather(data) {
+            cityElement.textContent = data.name;
+            temperature.textContent = `${Math.round(data.main.temp)}°`;
+            humid.textContent = `${data.main.humidity}`;
+            windSpeed.textContent = `${data.wind.speed} km/hr`;
+            visible.textContent = `${data.visibility / 1000}km`;
+            describe.textContent = data.weather[0].description;
+
+
+            const currentdate = new Date();
+            date.textContent = currentdate.toDateString();
+
+
+            const GetIcon =getWeatherIcon(data.weather[0].main);
+            //Icon.textContent = `<i class="material-icons">${GetIcon}</i>`; full element is printed
+            Icon.innerHTML = `<i class="material-icons">${GetIcon}</i>`;
+
+
+        }
+
+
+        const formSelect = document.querySelector(".search-form");
+        const InputElement = document.querySelector(".Input-city");
+
+        formSelect.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const city = InputElement.value;
+            if (city !== "") {
+                FetchWeatherData(city);
+
+                InputElement.value = " ";
+                //used to empty the value from the search bar
+            }
+        })
+
+
+        function getWeatherIcon(weatherCondition)
+        {
+              const IconMapArray={
+                Clear :"wb_sunny",
+                Clouds :"wb_cloudy",
+                Rain:"umbrella",
+                Thunderstorm :"flash_on",
+                Drizzle: "grain",
+                Snow: "ac_unit",
+                Mist:"cloud",
+                Smoke:"cloud",
+                Haze : "cloud",
+                Fog: "cloud"
+
+              };
+
+              return IconMapArray[weatherCondition] || "help"
+        }
+
+    </script>
+
+</html>
